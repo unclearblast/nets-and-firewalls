@@ -1,0 +1,23 @@
+sudo ufw default deny incoming
+sudo ufw default allow outgoing
+
+# SSH — только ПК администратора
+sudo ufw allow from 192.168.55.90 to any port 22 proto tcp
+
+# Prometheus — администратор и localhost
+sudo ufw allow from 192.168.55.90 to any port 9090 proto tcp
+sudo ufw allow from 127.0.0.1 to any port 9090 proto tcp
+
+# Node Exporter — администратор и localhost
+sudo ufw allow from 192.168.55.90 to any port 9100 proto tcp
+sudo ufw allow from 127.0.0.1 to any port 9100 proto tcp
+
+# Grafana — аналитики
+sudo ufw allow from 192.168.55.10/27 to any port 3000 proto tcp
+
+# Grafana — разработчики (корректно разбитый диапазон)
+sudo ufw allow from 192.168.55.91/29 to any port 3000 proto tcp
+sudo ufw allow from 192.168.55.96/27 to any port 3000 proto tcp
+sudo ufw allow from 192.168.55.128 to any port 3000 proto tcp
+
+sudo ufw enable
